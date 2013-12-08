@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="cn">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>移动web前端开发踩过的坑-17173UED学堂</title>
+
+		<meta name="description" content="记录自己在移动端Web开发中遇到过的问题及解决方法；介绍一个方便调试开发环境中页面的方法。">
+		<meta name="author" content="Kainy Guo">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+    <section>
+        <h1>
+            <br>
+</h1>
+<h1>移动web前端开发踩过的<b>坑</b>
+</h1>
+<div>
+    <b>
+    <br>
+    </b>
+</div>
+<div style="text-align: left; ">
+    <b>
+    <a href="http://weibo.com/Kainy" target="_blank">@Kainy Guo</a>
+</b>
+</div>
+<div style="text-align: left; ">
+    <b>12/05/ 2013</b>
+</div>
+    
+</section>
+    <section>
+        <section>
+            <h2>产品移动化是趋势</h2>
+<div>
+<blockquote>
+
+            <span>手机淘宝2013年11.11整体支付宝成交额53.5亿，是去年的5.6倍（9.6亿）；单日活跃用户达1.27亿；手机淘宝单日成交笔数达3590万笔，交易笔数占比整体的21%；</span>
+</blockquote>
+<blockquote>
+<span>IBM的一份报告显示，今年感恩节后的黑色星期五，移动端来的流量占了电商总体的42.6%，销售额占了26%，比去年提升了49%。</span>
+
+</blockquote>
+</div>
+    
+
+
+
+
+</section>
+            <section>
+                <h2>即将到来的新需求</h2>
+<div>
+    <br>
+</div>
+<div>
+    <ul>
+<li>
+<spen style="text-decoration:line-through">手机客户端（a.17173.com）</spen>；</li>
+        <li>
+            <span style="text-align: center;">开发移动版网页（m.17173.com）</span>
+            <span style="text-align: center;">；</span>
+            <br>
+</li>
+        <li>
+<span style="text-align: center;">移动适配改造。</span>
+            <br>
+</li>
+    </ul>
+</div>
+
+
+</section>
+            </section>
+            <section>
+                <h2>我的移动web开发经历</h2>
+<div>
+        <br>
+</div>
+<div>
+<ul>
+<li>
+<span style="text-align: center;">通行证首页/注册页改造</span>
+                <br>
+</li>
+<li>
+<span style="text-align: center;">登录/注册模块</span>
+                <br>
+</li>
+</ul>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/727c4b6900a5ec527472d3f1fad80178.jpg">
+                <br>
+</div>
+</div>
+</section>
+                <section>
+                    <h2>“mobile”的读法</h2>
+<div>
+    <br>
+</div>
+<div>
+    <span style="color: rgb(160, 160, 160); text-align: start;">英 ['məʊbaɪl]</span>&nbsp; &nbsp;<span style="color: rgb(160, 160, 160); text-align: start;">美 [ˈmoˌbil]</span>&nbsp;&nbsp;</div>
+<div>
+<br>
+</div>
+<div>
+<span style="color: rgb(0, 0, 0); text-align: start; white-space: pre-wrap;">mobile development  -</span>&nbsp;&nbsp;<a href="http://dict.youdao.com/search?le=eng&amp;q=mobile%20development" target="_blank">有道词典</a>
+    <br>
+</div>
+
+
+</section>
+                    <section>
+                        <h2>第一部分——踩坑流水帐</h2>
+<div>
+<br>
+</div>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/a615686a9a71c5d09077aeccb8f7fc5d.jpg">
+                        <br>
+</div>
+
+</section>
+                        <section>
+                            <section>
+                                <h2>CSS新属性<font style="font-size: 18px;">Bug #10169</font>
+</h2>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/4f3506be625719d43a26464bbc566a2d.png" style="width: 308.34375px; height: 299px; max-height: none; max-width: none;">
+                                <br>
+</div>
+<div>
+                                <ul>
+<li>
+<span style="text-align: center;">表现：iPad点击补全层后，出现短暂的残留阴影；</span>
+                                <br>
+</li>
+<li>
+<span style="text-align: center;">原因：iPad自带浏览器对被点击元素做高亮显示；</span>
+                                <br>
+</li>
+<li>
+<span style="text-align: center;">修复：可通过设置属性</span>
+                                <span style="text-align: center;">
+                                    <span style="background-color: rgb(63, 63, 63); color: rgb(220, 220, 220); font-family: monospace; text-align: left; white-space: pre-wrap;"> -webkit-tap-highlight-color: rgba(0,0,0,0)</span>
+                                </span>
+                                <span style="text-align: center;">避免。</span>
+</li>
+</ul>
+                            </div>
+
+
+</section>
+                            <section>
+                                <h2>自适应布局 Vs 固定高度<font style="font-size: 18px;">Bug #10111</font>
+</h2>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/160b03e6dc4d811109b4517d8ed10eb4.png" style="width: 331.52173913043475px; height: 305px; max-height: none; max-width: none;">
+                                <br>
+</div>
+<div>
+    <ul>
+<li>
+            <span style="text-align: center;">表现：登录过程中，“高度塌陷”</span>&nbsp;；<br>
+</li>
+        <li>
+            <span style="text-align: center;">原因：页面需适应不同宽度设备，不能设置容器高度值</span>&nbsp;；<br>
+</li>
+        <li>
+            <span>解决：js控制，组件会在登录状态切换前计算高度，状态切换时赋值給</span>
+            <span>waitElement/infoElement</span>
+<font color="#dcdcdc" face="monospace" style="font-style: inherit; font-variant: inherit; font-weight: inherit;">
+                                <span style="white-space: pre;">的height</span>。</font>
+                                <br>
+</li>
+    </ul>
+</div>
+
+</section>
+                            </section>
+                            <section>
+                                <section>
+                                    <h2>虚拟键盘上的"新伙伴"<span style="font-size: 18px; text-align: start;">BUG #6764</span>
+</h2>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/e9cff56eecbd3df81b4cacbf1573ae0e.png">
+                                    <br>
+</div>
+<div>
+                                    <ul>
+<li>
+<span style="text-align: center;">表现：输入用户名不自动补全邮箱域部分；</span>
+                                    <br>
+</li>
+<li>
+<span style="text-align: center;">原因：“next”键码不同于普通键盘的“tab”键码；</span>
+                                    <br>
+</li>
+<li>
+<span style="text-align: center;">解决：监听blur事件取代keyup事件+keyCode判断。</span>
+                                    <br>
+</li>
+</ul>
+                                </div>
+                            </section>
+                            <section>
+                                <h2>ios 浏览器事件误触发<span style="text-align: start;">
+                                    <font style="font-size: 18px;">Bug #10377</font>
+                                </span>
+</h2>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/7a5a98cf165f396d198b11da10687ae5.png" style="width: 204.08450704225353px; height: 322px; max-height: none; max-width: none;">
+                                <br>
+</div>
+<div>表现：iPhone5下补全层触摸就消失，无法拖动；</div>
+<div>原因：scroll行为触发窗口resize事件?；</div>
+<div>解决：。</div>
+                            </section>
+                        </section>
+                        <section>
+                            <section>
+                                <h2>(UI)webView != browser<font style="font-size: 18px;">Bug #7291</font>
+</h2>
+<div>
+                                <br>
+                            </div>
+<div>
+                            <ul>
+<li>
+<span style="text-align: center;">表现：三星、HTC x920e（android4.1.1）安装测试app，只能点开一次注册服务条款，关闭后无法再点开；</span>
+                            <br>
+</li>
+<li>
+<span style="text-align: center;">原因：app中调用<span style="background-color: rgb(63, 63, 63); color: rgb(220, 220, 220); font-family: monospace; text-align: left; white-space: pre-wrap;">window.open </span>
+                        </span>
+                        <span style="text-align: center;">只能打开一次同名窗口；</span>
+</li>
+<li>
+                        <span style="text-align: center;">解决：name属性使用变量值（如：时间戳）；</span>
+                        </li>
+<li>
+<span style="text-align: center;">类似：横竖屏切换表单数据丢失</span>
+                        <font style="font-size: 18px;">Bug #6964。</font>
+</li>
+</ul>
+                    </div>
+                </section>
+                <section>
+                    <h2>当心email tel…格式字符串<font style="font-size: 18px;">Bug #10205</font>
+</h2>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/dc42e1d0ff51201dfeb02fedaa6dbad2.png" style="width: 341.70410958904114px; height: 234px; max-height: none; max-width: none;">
+                    <br>
+</div>
+<div>
+<ul>
+<li>
+        <span style="text-align: center;">表现：点击email格式的字符串跳转到</span>
+        <i style="text-align: center;">mailto：</i>
+        <span style="text-align: center;">协议地址</span>
+        <br>
+</li>
+    <li>
+        <span style="text-align: center;">原因：应用自动将格式匹配的字符串转换为链接</span>
+        <br>
+</li>
+    <li>
+        <span style="text-align: center;">解决：<ul>
+<li>破坏格式（如使用span标签包裹“@”符号）；</li>
+<li>通过设置meta 标签禁用格式转换。</li>
+</ul>
+                </span>
+        <br>
+</li>
+</ul>
+</div>
+
+</section>
+            </section>
+            <section>
+                <section>
+                    <h2>厂商定制行为<font style="font-size: 18px;">Bug #6810</font>
+</h2>
+<div>
+</div>
+<div>
+    <font>
+        <img src="http://kainy-migs.stor.sinaapp.com/original/cece7622021dbe9550bdcf692c0f738f.png">
+                    <br>
+                </font>
+</div>
+<div>
+                <ul>
+<li>
+<span style="text-align: center;">表现：input自动添加占位符，内容与label元素一致；</span>
+                <br>
+</li>
+<li>
+<span style="text-align: center;">原因：</span>
+                <span style="text-align: center;">三星GT-I9308 自带浏览器定制的行为；</span>
+                <br>
+</li>
+<li>
+<span style="text-align: center;">解决：使用placeholder属性描述输入内容，取代label。</span>
+                <br>
+</li>
+</ul>
+            </div>
+</section>
+            <section>
+                <h2>retina屏图标显示模糊<font style="font-size: 18px;">Bug #7282</font>
+</h2>
+<div>
+    <img src="http://kainy-migs.stor.sinaapp.com/original/143221379de6f85e10a8be66730569c3.png">
+                <br>
+</div>
+
+
+</section>
+                <section>
+                    <div>
+    <ul>
+<li>
+            <span style="text-align: center;">表现：普通屏幕显示正常的图标，在Retina屏下显示模糊；</span>
+            <br>
+</li>
+        <li>
+            <span style="text-align: center;">原因：设备像素比高，需要更高分辨率的图片资源；</span>
+            <br>
+</li>
+        <li>
+            <span>解决：</span>
+<ul>
+<li>img标签：<span style="text-align: center;">通过devicePixelRatio属性判断是否高清屏，是则设置宽高、</span>修改src属性（引用2倍分辨率图片资源）；</li>
+                <li>样式中的背景图：媒体查询。</li>
+            </ul>
+<br>
+</li>
+    </ul>
+</div>
+</section>
+                </section>
+                <section>
+                    <h2>小结：对待坑的态度</h2>
+<div>
+<br>
+</div>
+<div>
+<ul>
+<li>
+        <span style="text-align: center;">从前：踩坑了，假装没遇到，爬起后继续往前走；</span>
+        <br>
+</li>
+    <li>
+        <span style="text-align: center;">原因：</span>&nbsp;<br>
+                    <ul>
+<li>挫败感；</li>
+<li>Bug修复增加“不必要的”代码；</li>
+        </ul>
+</li>
+    <li>
+        <span style="text-align: center;">现在：倾向于先找找绕开的方法，然后做个标记，避免在同样的坑上栽跟头；</span>
+        <br>
+</li>
+    <li>
+        <span style="text-align: center;">原因：</span>
+        <br>
+                    <ul>
+<li>正视问题是解决问题的开端；</li>
+<li>找出问题关联性，将N个独立问题归纳为一类问题；</li>
+        </ul>
+</li>
+    <li>
+        <span style="text-align: center;">建议：利用</span>&nbsp;<a href="http://jira.17173.com/confluence" target="_blank" style="text-align: center;">jira.17173.com</a>
+        <span style="text-align: center;">的个人空间记录项目中遇到的问题。</span>
+        <br>
+</li>
+</ul>
+<div style="text-align: left;">
+    <br>
+</div>
+</div>
+
+
+
+
+<img src="http://kainy-migs.stor.sinaapp.com/original/4191d7e852d4dcc7e8ae19c1573adfe9.png" class="fragment absolute-element" data-fragment-index="0" style="position: absolute; max-height: none; max-width: none; width: 951.9120756511762px; height: 512.9301433597316px; z-index: 4; left: -15px; top: 134px;">
+                </section>
+                <section>
+                    <section>
+                        <h2>第二部分——隐形的坑</h2>
+<div>
+                        <b>小游戏</b>
+                    </div>
+<div>
+<ol>
+<li>
+<span style="text-align: center;">拿出手机<span style="font-size: 36px; font-style: normal; font-variant: normal;">
+                    <span style="font-size: 36px; font-style: normal; font-variant: normal;">，</span>打开wifi</span>；</span>
+                    <br>
+</li>
+<li>
+<span style="text-align: center;">连接到SSID以“<i>360_</i>”开头的热点；</span>
+                    <br>
+</li>
+<li>
+<span style="text-align: center;">浏览器打开网址</span>
+                    <a href="http://192.168.0.1/" style="text-align: center;">192.168.0.1</a>
+                    <span style="text-align: center;">；</span>
+                    <br>
+</li>
+</ol>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/65c4cb81733589bf044ae3e6eb5cd142.png">
+                    <br>
+</div>
+</div>
+                </section>
+                <section>
+                    <h2>发生了什么</h2>
+<div>
+<ul>
+<li>
+<span style="text-align: center;">连入360随身wifi（花名歪蛋蛋）创建的无线局域网；</span>
+                    <br>
+</li>
+<li>
+<span style="text-align: center;">手机通过<span style="font-size: 36.344757080078125px; font-style: normal; font-variant: normal;">内网ip</span>访问工作机；</span>
+                    <br>
+</li>
+<li>
+<span style="text-align: center;">“开始”后的某一时刻对开发环境上的网页做修改；</span>
+                    <br>
+</li>
+<li>
+<span style="text-align: center;">上一步所做的修改</span>
+                    <b style="text-align: center;">即时</b>
+                    <span style="text-align: center;">反映到手机。</span>
+                    <br>
+</li>
+</ul>
+<div>
+                    <br>
+                </div>
+</div>
+<div>
+                <br>
+            </div>
+        </section>
+        <section>
+            <h2>对应到工作<span style="font-size: 75.96px;">中</span>
+</h2>
+<div>
+<ul>
+<li>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">场景：开发和调试时，需对代码改动后的效果进行</span>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">预览；</span>
+<br>
+</li>
+<li>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">问题：</span>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">手机</span>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">无法访问到工作机开发环境；</span>
+<br>
+</li>
+<li>
+<span style="text-align: center;">过去的做法：将网页上传到手机可访问的内网服务器；</span>
+<br>
+</li>
+<li>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">不足：</span>
+<span style="font-size: 36px; font-style: normal; font-variant: normal; text-align: center;">调试需在编辑器和浏览器间</span>
+<span style="text-align: center;">频繁</span>
+<span style="text-align: center;">切换，增加中间步骤（文件同步）</span>
+<span style="text-align: center;">影响效率；</span>
+</li>
+<li>
+<span style="text-align: center;">新方法：工作机网络与手机共享，手机直接访问开发环境；</span>
+</li>
+<li>好处：跳过文件操作，直接预览修改</li>
+</ul>
+<div style="text-align: center;">
+    <img src="http://kainy-migs.stor.sinaapp.com/original/524757b46298d05851299e38bd1316e4.png">
+    。
+    <br>
+</div>
+</div>
+
+</section>
+        </section>
+        <section>
+            <section>
+                <h2>更进一步</h2>
+<div>
+<ol>
+<li>
+<span style="text-align: center;">找到刚才创建的无线连接；</span>
+                <br>
+</li>
+<li>
+<span style="text-align: center;">设置http代理，ip：192.168.0.1，端口：17173；</span>
+                <br>
+</li>
+<li>
+<span style="text-align: center;">手机浏览器中打开17173首页。</span>
+                <br>
+</li>
+</ol>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/ea52abe1e6e12c2ee9a45f1996adbc94.png">
+                <br>
+</div>
+</div>
+            </section>
+            <section>
+                <h2 style="font-style: normal; font-variant: normal;">发生了什么</h2>
+<div>
+<img src="http://kainy-migs.stor.sinaapp.com/original/13297ad53744da3f7eaf1f9fbccd71d9.png">
+                <br>
+</div>
+            </section>
+            <section>
+                <h2 style="font-style: normal; font-variant: normal;">对应到工作中</h2>
+<div>
+    <ul>
+<li>
+            <span style="text-align: center;">场景：部分<span style="font-size: 36.344757080078125px; font-style: normal; font-variant: normal;">内网服务</span>需要修改host才能通过域名访问；</span>
+            <br>
+</li>
+        <li>
+            <span style="text-align: center;">问题：绝大部分手机不支持直接修改hosts文件；</span>
+</li>
+<li>
+<span style="text-align: center;">过去的做法：通过刷机、越狱手段获取权限后修改hosts；</span>
+                <span>&nbsp;</span>
+                <br>
+</li>
+        <li>
+            <span style="text-align: center;">不足：每台设备都必须进行提权/修改hosts操作；</span>
+            <br>
+</li>
+        <li>
+            <span style="text-align: center;">新方法：通过设置代理让所有设备共用工作机上的hosts文件；</span>
+            <br>
+</li>
+        <li>
+            <span style="text-align: center;">好处：</span>
+            <br>
+                <ol>
+<li> 操作简单，<span style="font-size: 36.1713981628418px; font-style: normal; font-variant: normal;">在PC机上<span style="font-size: 36.1713981628418px; font-style: normal; font-variant: normal;">修改</span>hosts文件相对方便</span>；</li>
+<li>
+                <span style="font-size: 36.1713981628418px; font-style: normal; font-variant: normal;">无需重复，只需维护一份hosts文件；</span>
+            </li>
+<li>文艺范 —— 做移动端web测试的妹纸再也不必是懂刷机能越狱的女汉子。<br>
+</li>
+            </ol>
+</li>
+    </ul>
+</div>
+
+
+</section>
+        </section>
+        <section>
+            <h2>小结</h2>
+<div>
+    <ul>
+<li>
+            <span style="text-align: center;">把不合理的视为开发流程的一部分，以至于身在坑中却毫无意识；</span>
+            <br>
+</li>
+        <li>
+            <span style="text-align: center;">实现起来超出预料的麻烦，说明解决方案可能不合理；</span>
+            <br>
+</li>
+<li>经验积累重要，但解决新问题也需要引入新思路；</li>
+<li>20元的投入可以产生14%的工时回报，绝对是比好买卖。</li>
+    </ul>
+</div>
+</section>
+            <section>
+                <h2>总结</h2>
+<div>
+    <ul>
+<li>
+            <span style="text-align: center;">三个题外话</span>
+            <br>
+                <ol>
+<li>移动化是趋势</li>
+<li>对我们的影响</li>
+<li>“Mobile”的读法</li>
+            </ol>
+</li>
+        <li>
+            <span style="text-align: center;">四类具体的坑</span>
+            <br>
+                <ol>
+<li>样式</li>
+<li>脚本</li>
+<li>应用</li>
+<li>系统/硬件</li>
+            </ol>
+</li>
+        <li>
+            <span style="text-align: center;">调试方法改进</span>
+            <br>
+                <ol>
+<li>手机直接访问开发环境</li>
+<li>手机通过<span style="font-size: 36px; font-style: normal; font-variant: normal;">工作机</span>代理访问内网服务。</li>
+</ol>
+</li>
+</ul>
+</div>
+
+</section>
+                <section>
+                    <h2>Q&amp;A</h2>
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div>
+    <br>
+</div>
+<div class="fragment" data-fragment-index="0">
+    <font style="font-size: 166px;">QQQ</font>
+    <font style="font-size: 72px;">～</font>。</div>
+</section>
+                </div>
+
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
